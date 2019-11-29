@@ -30,7 +30,7 @@
 
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
 		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
-		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/ngodev" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/ngodev?useUnicode=true&amp;characterEncoding=UTF-8" />
 		<property name="username" value="ngow" />
 		<property name="password" value="nG@F0rmW#b" />
 		<!-- 连接只读数据库时配置为true， 保证安全 -->

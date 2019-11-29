@@ -3,8 +3,10 @@ package ngo.front.deploy.json;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +47,10 @@ public class PushControler {
     
     @RequestMapping(value = "/ants/push", method = RequestMethod.GET)
     public ResponseEntity<String> deploy(@RequestParam("type") String type, @RequestParam("path") String outFilePath, @RequestParam("token") String token) {
-    	//TODO: validate token here   	
+    	//TODO: validate token here   
+    	
+    	logger.info("push action ver1.1, type="+type+",outfile="+outFilePath+",token="+token);
+    	
     	if (type.equals("bom"))
     		return handleBom(outFilePath);
     	else if (type.equals("module"))
@@ -68,8 +73,15 @@ public class PushControler {
         	
         	//1. load the bom file from designated path
         	String filePath = servletContext.getRealPath(path);
-        	FileReader fr = new FileReader(filePath);
-        	br = new BufferedReader(fr);
+        	
+        	//FileReader fr = new FileReader(filePath);
+        	//br = new BufferedReader(fr);
+        	
+        	InputStreamReader isr = new InputStreamReader(new FileInputStream(filePath), "UTF-8");
+        	br = new BufferedReader(isr);
+        	
+        	
+        	
         	String line, row[], name, url, md5, temp[], grade, module, lorder, category;
         	line = br.readLine();
             while (line!=null && line.length() > 0) {
@@ -152,8 +164,14 @@ public class PushControler {
         	
         	//1. load the module file from designated path
         	String filePath = servletContext.getRealPath(path);
-        	FileReader fr = new FileReader(filePath);
-        	br = new BufferedReader(fr);
+        	
+        	//FileReader fr = new FileReader(filePath);
+        	//br = new BufferedReader(fr);
+        	
+        	InputStreamReader isr = new InputStreamReader(new FileInputStream(filePath), "UTF-8");
+        	br = new BufferedReader(isr);
+        	
+        	
         	String line, row[], name, gid, mid, description;
         	line = br.readLine();
             while (line!=null && line.length() > 0) {
@@ -227,8 +245,15 @@ public class PushControler {
         	
         	//1. load the grades file from designated path
         	String filePath = servletContext.getRealPath(path);
-        	FileReader fr = new FileReader(filePath);
-        	br = new BufferedReader(fr);
+        	
+        	
+        	//FileReader fr = new FileReader(filePath);
+        	//br = new BufferedReader(fr);
+        	
+        	InputStreamReader isr = new InputStreamReader(new FileInputStream(filePath), "UTF-8");
+        	br = new BufferedReader(isr);
+        	
+        	
         	String line, row[], name, gid, description;
         	line = br.readLine();
             while (line!=null && line.length() > 0) {

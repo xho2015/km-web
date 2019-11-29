@@ -37,7 +37,7 @@ public class ResourceControler {
 	
 	private final Logger logger = Logger.getLogger(this.getClass());
     
-    @RequestMapping(value = "/json/resource", method = RequestMethod.GET)
+    @RequestMapping(value = "/json/resource", method = RequestMethod.GET, produces = {"text/html;charset=UTF-8"})
     public ResponseEntity<String> request(@RequestParam("key") String key, @RequestParam("token") String token) {
         try {
         	//validate token here
@@ -71,8 +71,11 @@ public class ResourceControler {
         try {
         	if (gradeId.endsWith(".all"))
         		return ResponseEntity.ok(moduleService.getAll());
-        	else
-        		return ResponseEntity.ok(moduleService.getByGrade(gradeId));
+        	else {
+        		String output = moduleService.getByGrade(gradeId);
+        		return ResponseEntity.ok(output);
+        	
+        	}
         } catch (Exception e) {
         	logger.error(e.getMessage());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
