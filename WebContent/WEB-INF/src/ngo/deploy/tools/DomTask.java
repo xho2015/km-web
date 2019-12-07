@@ -53,7 +53,28 @@ public class DomTask extends org.apache.tools.ant.Task {
 	
 	private String verSeedName;
 	
+	private String debugName;
 	
+	private String debug = "true";
+	
+	
+	
+	public String getDebugName() {
+		return debugName;
+	}
+
+	public void setDebugName(String debugName) {
+		this.debugName = debugName;
+	}
+
+	public String getDebug() {
+		return debug;
+	}
+
+	public void setDebug(String debug) {
+		this.debug = debug;
+	}
+
 	public String getContext() {
 		return context;
 	}
@@ -188,6 +209,9 @@ public class DomTask extends org.apache.tools.ant.Task {
 			//3. replace 'verSeedName' tag
 			dom = dom.replaceAll(this.verSeedName, verSeed);
 			
+			//3.0 replace debug tag
+			dom = dom.replaceAll(this.debugName, debug);
+			
 			//3.1 replace all line endings if compact is set to true
 			if (this.compact.equalsIgnoreCase("true")){
 				dom = dom.replaceAll("\r\n", "");
@@ -249,6 +273,7 @@ public class DomTask extends org.apache.tools.ant.Task {
 
 	@Override
 	public void execute() throws BuildException {
+		System.out.println("DomGen tool v1.1");	
 		loadBomVer();
 		File[] files = new File(this.path).listFiles();
 		iterateFiles(files);
